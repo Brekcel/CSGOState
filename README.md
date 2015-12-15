@@ -3,6 +3,8 @@ Java library for Counter-Strike: Global Offensive's Game State Integration.
 
 Still in very early development.
 
+Majority of development is streamed live on [Twitch](http://www.twitch.tv/sakki54)
+
 ## Dependencies
 * [Google's Gson](https://github.com/google/gson)
 
