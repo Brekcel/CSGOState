@@ -14,26 +14,34 @@ public class Server {
 	private String authToken;
 	private int port;
 	private PostReceiver receive;
+	private Info info;
+	public boolean onlyUser;
 
-	public Server(int port, PostHandler postHandle, String authToken) throws IOException {
+	public Server(int port, PostHandler postHandle, boolean onlyUser, String authToken) throws IOException {
 		this.port = port;
 		this.authToken = authToken;
+		this.onlyUser = onlyUser;
 		serv = HttpServer.create(new InetSocketAddress(port), 0);
 		receive = new PostReceiver(this, postHandle);
 		serv.createContext("/", receive);
 		serv.setExecutor(Executors.newCachedThreadPool());
 		serv.start();
+		info = new Info(this);
 		System.out.println("Server successfully started on port " + port + (authToken == null ? "." : " with Auth Token: " + authToken));
 	}
 
-	public Server(int port, PostHandler postHandle) throws IOException {
-		new Server(port, postHandle, null);
+	public Server(int port, PostHandler postHandle, boolean onlyUser) throws IOException {
+		new Server(port, postHandle, onlyUser, null);
+	}
+
+	public Info getInfo() {
+		return info;
 	}
 
 	public JsonResponse getCurrentJSR() {
 		return receive.getCurrentJSR();
 	}
-	
+
 	public String getAuthToken() {
 		return authToken;
 	}

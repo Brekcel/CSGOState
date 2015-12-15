@@ -3,7 +3,7 @@ package com.brekcel.csgostate.JSON;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public abstract class Weapon {
+public class Weapon {
 	@SerializedName("name")
 	@Expose
 	private String name;
@@ -151,4 +151,6 @@ public abstract class Weapon {
 	public void setState(String state) {
 		this.state = state;
 	}
+
+	public Weapon() {}
 }

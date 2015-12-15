@@ -1,17 +1,23 @@
 package com.brekcel.csgostate.post;
 
 import com.brekcel.csgostate.JSON.JsonResponse;
+import com.brekcel.csgostate.JSON.Map;
+import com.brekcel.csgostate.JSON.MatchStats;
 import com.brekcel.csgostate.JSON.Player;
-import com.brekcel.csgostate.JSON.Weapon0;
-import com.brekcel.csgostate.JSON.Weapon1;
-import com.brekcel.csgostate.JSON.Weapon2;
+import com.brekcel.csgostate.JSON.Round;
+import com.brekcel.csgostate.JSON.State;
+import com.brekcel.csgostate.JSON.Weapon;
 
+// TODO: Change Strings to enums?
 public interface PostHandler {
 	//@formatter:off
 	
-	public void JsonResponseChange(JsonResponse jsonResponse);
+	public void receivedJsonResponse(JsonResponse jsonResponse);
 	
 	//START OF MAP
+	public void newMap(Map map);
+	public void receivedMap(Map map);
+	public void mapReset();
 	public void mapNameChange(String mapName);
 	public void modeChange(String mode);
 	public void roundChange(int round);
@@ -21,15 +27,24 @@ public interface PostHandler {
 	//END OF MAP
 	
 	//START OF ROUND
-	public void roundWinningTeamChange(String team);
+	public void newRound(Round round);
+	public void roundReset();
 	public void roundBombChange(String bomb);
+	public void roundBombReset();
+	public void roundWinningTeamChange(String team);
 	public void roundPhaseChange(String phase);
+	
 	//END OF ROUND
 	
 	//START OF PLAYER
-	public void playerChange(Player player);
+	public void newPlayer(Player player);
+	public void receivedPlayer(Player player);
+	public void playerReset();
+	public void playerNameChange(String name);
+	public void playerSteamIDChange(String steamID);
 	public void playerTeamChange(String team);
-	public void playerActivityChange(String activity); //TODO: Change to enum??
+	public void playerActivityChange(String activity);
+	public void playerStateChange(State state);
 	
 		//START OF PlayerState
 		public void playerHealthChange(int health);
@@ -45,14 +60,15 @@ public interface PostHandler {
 		
 		//Start of PlayerWeapons
 		//TODO: Rework Weapons. They suck. Hard. //TODONE. Kinda.
-		public void weaponCountChange(int count);
-		public void weaponKnifeChange(Weapon0 knife);
-		public void weaponPrimaryChange(Weapon1 primary);
-		public void weaponSecondaryChange(Weapon2 secondary);
-		public void weaponActiveChange(int weapon);
+		public void newWeapons(Weapon[] weapons);
+		public void weaponsChange(Weapon[] weapons);
+		public void weaponActiveChange(Weapon weapon);
+		public void weaponShoot(Weapon weapon);
+		public void weaponReload(Weapon weapon);
 		//End of PlayerWeapons
 		
 		//Start of PlayerMatchStats
+		public void playerMatchStatsChange(MatchStats ms);
 		public void playerMatchKillsChange(int kills);
 		public void playerMatchAssistsChange(int assists);
 		public void playerMatchDeathsChange(int deaths);

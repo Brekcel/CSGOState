@@ -1,24 +1,42 @@
 package com.brekcel.csgostate.post;
 
 import com.brekcel.csgostate.JSON.JsonResponse;
+import com.brekcel.csgostate.JSON.Map;
+import com.brekcel.csgostate.JSON.MatchStats;
 import com.brekcel.csgostate.JSON.Player;
-import com.brekcel.csgostate.JSON.Weapon0;
-import com.brekcel.csgostate.JSON.Weapon1;
-import com.brekcel.csgostate.JSON.Weapon2;
+import com.brekcel.csgostate.JSON.Round;
+import com.brekcel.csgostate.JSON.State;
+import com.brekcel.csgostate.JSON.Weapon;
 
 // Simple class that implements PostHandler.
 // Use this when you only want to use specific methods from PostHandler.
 // If using ALL methods of PostHandler, might as well just implement that
 // instead of extending this.
 public class PostHandlerAdapter implements PostHandler {
+
 	@Override
-	public void JsonResponseChange(JsonResponse jsonResponse) {}
+	public void receivedJsonResponse(JsonResponse jsonResponse) {}
+
+	@Override
+	public void newMap(Map map) {}
+
+	@Override
+	public void receivedMap(Map map) {}
+
+	@Override
+	public void mapReset() {}
 
 	@Override
 	public void mapNameChange(String mapName) {}
 
 	@Override
+	public void modeChange(String mode) {}
+
+	@Override
 	public void roundChange(int round) {}
+
+	@Override
+	public void teamNameChange(String ct, String t) {}
 
 	@Override
 	public void scoreChange(int ct, int t) {}
@@ -27,22 +45,46 @@ public class PostHandlerAdapter implements PostHandler {
 	public void phaseChange(String phase) {}
 
 	@Override
-	public void roundWinningTeamChange(String team) {}
+	public void newRound(Round round) {}
+
+	@Override
+	public void roundReset() {}
 
 	@Override
 	public void roundBombChange(String bomb) {}
 
 	@Override
+	public void roundBombReset() {}
+
+	@Override
+	public void roundWinningTeamChange(String team) {}
+
+	@Override
 	public void roundPhaseChange(String phase) {}
 
 	@Override
-	public void playerChange(Player player) {}
+	public void newPlayer(Player player) {}
+
+	@Override
+	public void receivedPlayer(Player player) {}
+
+	@Override
+	public void playerReset() {}
+
+	@Override
+	public void playerNameChange(String name) {}
+
+	@Override
+	public void playerSteamIDChange(String steamID) {}
 
 	@Override
 	public void playerTeamChange(String team) {}
 
 	@Override
 	public void playerActivityChange(String activity) {}
+
+	@Override
+	public void playerStateChange(State state) {}
 
 	@Override
 	public void playerHealthChange(int health) {}
@@ -72,19 +114,22 @@ public class PostHandlerAdapter implements PostHandler {
 	public void playerRoundKillsHSChange(int killsHS) {}
 
 	@Override
-	public void weaponCountChange(int count) {}
+	public void newWeapons(Weapon[] weapons) {}
 
 	@Override
-	public void weaponKnifeChange(Weapon0 knife) {}
+	public void weaponsChange(Weapon[] weapons) {}
 
 	@Override
-	public void weaponPrimaryChange(Weapon1 primary) {}
+	public void weaponActiveChange(Weapon weapon) {}
 
 	@Override
-	public void weaponSecondaryChange(Weapon2 secondary) {}
+	public void weaponShoot(Weapon weapon) {}
 
 	@Override
-	public void weaponActiveChange(int weapon) {}
+	public void weaponReload(Weapon weapon) {}
+
+	@Override
+	public void playerMatchStatsChange(MatchStats ms) {}
 
 	@Override
 	public void playerMatchKillsChange(int kills) {}
@@ -99,11 +144,4 @@ public class PostHandlerAdapter implements PostHandler {
 	public void playerMatchMVPSChange(int mvps) {}
 
 	@Override
-	public void playerMatchScoreChange(int score) {}
-
-	@Override
-	public void modeChange(String mode) {}
-
-	@Override
-	public void teamNameChange(String ct, String t) {}
-}
+	public void playerMatchScoreChange(int score) {}}
