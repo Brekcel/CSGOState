@@ -118,22 +118,24 @@ public interface PostHandler {
 	public void roundReset();
 
 	/**
-	 * Called when the bomb's state changes.
+	 * Called when the bomb is planted.
 	 * <br>
 	 * <b>As of <a href=
 	 * "https://www.reddit.com/r/GlobalOffensive/comments/3xah5n/counterstrike_global_offensive_update_for_121715/">
 	 * 12.17.15's 1.35.1.6 Update</a>, the bomb's state is randomly delayed when
 	 * user is not a spectator.</b>
-	 * 
-	 * @param bomb
-	 *            The new state of the bomb.
 	 */
-	public void roundBombChange(String bomb);
+	public void bombPlanted();
 
 	/**
-	 * Called when the bomb's state previously existed, but not longer does.
+	 * Called when the bomb explodes.
 	 */
-	public void roundBombReset();
+	public void bombExploded();
+
+	/**
+	 * Called when the bomb is defused.
+	 */
+	public void bombDefused();
 
 	/**
 	 * Called when a team wins a round.
@@ -144,12 +146,20 @@ public interface PostHandler {
 	public void roundWinningTeamChange(String team);
 
 	/**
-	 * Called when the rounds phase changes.
+	 * Called when the round is live.
 	 * 
-	 * @param phase
-	 *            The new Round phase.
 	 */
-	public void roundPhaseChange(String phase);
+	public void roundLive();
+
+	/**
+	 * Called when the round is in freezetime.
+	 */
+	public void roundFreezeTime();
+
+	/**
+	 * Called when the round is over.
+	 */
+	public void roundOver();
 	// END OF ROUND
 
 	// START OF PLAYER

@@ -53,16 +53,7 @@ public class PostHandlerAdapter implements PostHandler {
 	public void roundReset() {}
 
 	@Override
-	public void roundBombChange(String bomb) {}
-
-	@Override
-	public void roundBombReset() {}
-
-	@Override
 	public void roundWinningTeamChange(String team) {}
-
-	@Override
-	public void roundPhaseChange(String phase) {}
 
 	@Override
 	public void newPlayer(Player player) {}
@@ -150,4 +141,22 @@ public class PostHandlerAdapter implements PostHandler {
 
 	@Override
 	public void playerMatchStatsReceived(MatchStats ms) {}
+
+	@Override
+	public void bombPlanted() {}
+
+	@Override
+	public void bombExploded() {}
+
+	@Override
+	public void bombDefused() {}
+
+	@Override
+	public void roundLive() {}
+
+	@Override
+	public void roundFreezeTime() {}
+
+	@Override
+	public void roundOver() {}
 }

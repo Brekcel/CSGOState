@@ -131,30 +131,45 @@ public class PostReceiver implements HttpHandler {
 					Round nr = jsr.getRound();
 					Round cr = currentJSR.getRound();
 					if (currentJSR.getRound() == null) {
-						currentJSR.setRound(nr);
-						if (nr.getPhase() != null)
-							handle.roundPhaseChange(nr.getPhase());
-						if (nr.getBomb() != null)
-							handle.roundBombChange(nr.getBomb());
+						if (nr.getPhase() != null) {
+							if (nr.getPhase().equals("live"))
+								handle.roundLive();
+							else if (nr.getPhase().equals("freezetime"))
+								handle.roundFreezeTime();
+							else if (nr.getPhase().equals("over"))
+								handle.roundOver();
+						}
+						if (nr.getBomb() != null) {
+							if (nr.getBomb().equals("planted"))
+								handle.bombPlanted();
+							else if (nr.getBomb().equals("exploded"))
+								handle.bombExploded();
+							else if (nr.getBomb().equals("defused"))
+								handle.bombDefused();
+						}
 						if (nr.getWinTeam() != null)
 							handle.roundWinningTeamChange(nr.getWinTeam());
 					} else {
 						if (nr.getBomb() != null && (cr.getBomb() == null || !cr.getBomb().equals(nr.getBomb()))) {
-							handle.roundBombChange(nr.getBomb());
-							cr.setBomb(nr.getBomb());
-						} else if (nr.getBomb() == null && cr.getBomb() != null) {
-							handle.roundBombReset();
-							cr.setBomb(null);
+							if (nr.getBomb().equals("planted"))
+								handle.bombPlanted();
+							else if (nr.getBomb().equals("exploded"))
+								handle.bombExploded();
+							else if (nr.getBomb().equals("defused"))
+								handle.bombDefused();
 						}
 						// Needs to be tested.
 						// Tested for 5 minutes. Worked.
 						if (nr.getWinTeam() != null && (cr.getPhase() != null && !cr.getPhase().equals(nr.getPhase()))) {
 							handle.roundWinningTeamChange(nr.getWinTeam());
-							cr.setWinTeam(nr.getWinTeam());
 						}
 						if (nr.getPhase() != null && (cr.getPhase() == null || !cr.getPhase().equals(nr.getPhase()))) {
-							handle.roundPhaseChange(nr.getPhase());
-							cr.setPhase(nr.getPhase());
+							if (nr.getPhase().equals("live"))
+								handle.roundLive();
+							else if (nr.getPhase().equals("freezetime"))
+								handle.roundFreezeTime();
+							else if (nr.getPhase().equals("over"))
+								handle.roundOver();
 						}
 					}
 				}
