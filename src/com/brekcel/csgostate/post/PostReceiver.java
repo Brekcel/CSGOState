@@ -1,6 +1,9 @@
 package com.brekcel.csgostate.post;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -20,20 +23,19 @@ public class PostReceiver implements HttpHandler {
 	private PostHandler handle;
 	private Server serv;
 	private Gson gson;
-	// private BufferedWriter writer;
+	private BufferedWriter writer;
 	private JsonResponse currentJSR;
 
 	public PostReceiver(Server serv, PostHandler handle) {
 		this.serv = serv;
 		this.handle = handle;
 		gson = new Gson();
-		// try {
-		// new File("A:/csgoLog.txt").createNewFile();
-		// writer = new BufferedWriter(new FileWriter(new
-		// File("A:/csgoLog.txt"), true));
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
+		try {
+			new File("A:/csgoLog.txt").createNewFile();
+			writer = new BufferedWriter(new FileWriter(new File("A:/csgoLog.txt"), true));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -48,15 +50,16 @@ public class PostReceiver implements HttpHandler {
 				printResponse.append(inl + "\n");
 			}
 			in.close();
-			// writer.write(response.toString());
-			// writer.newLine();
-			// writer.flush();
+			writer.write(response.toString());
+			writer.newLine();
+			writer.flush();
 			JsonResponse jsr = gson.fromJson(response.toString(), JsonResponse.class);
 			if ((jsr.getAuth() == null && serv.getAuthToken() != null) && (serv.getAuthToken() == null && jsr.getAuth() != null) && !jsr.getAuth().getToken().equals(serv.getAuthToken())) {
 				System.out.println("Invalid connection attempt from: " + exc.getLocalAddress());
 				return;
 			}
 			exc.sendResponseHeaders(200, -1);
+			// System.out.println(response.toString());
 			callMethods(jsr);
 		} catch (Exception e) {
 			System.out.println(printResponse.toString());
@@ -105,11 +108,17 @@ public class PostReceiver implements HttpHandler {
 						if ((nm.getTeamCt().getScore() != null && nm.getTeamT().getScore() != null) && (cm.getTeamCt().getScore() == null || cm.getTeamT().getScore() == null || cm.getTeamCt().getScore() != nm.getTeamCt().getScore() || cm.getTeamT().getScore() != nm.getTeamT().getScore())) {
 							handle.scoreChange(nm.getTeamCt().getScore(), nm.getTeamT().getScore());
 						}
-						if ((nm.getTeamCt().getName() != null && (cm.getTeamCt().getName() == null || !cm.getTeamCt().getName().equals(nm.getTeamCt().getName()))) || (nm.getTeamT().getName() != null && (cm.getTeamT().getName() == null || !cm.getTeamT().getName().equals(cm.getTeamT().getName())))) {
-							handle.teamNameChange(nm.getTeamCt().getName(), nm.getTeamT().getName());
+						if ((nm.getTeamCt().getName() != null && (cm.getTeamCt().getName() == null || !cm.getTeamCt().getName().equals(nm.getTeamCt().getName())))) {
+							handle.teamNameChange("ct", nm.getTeamCt().getName());
 						}
-						if ((nm.getTeamCt().getName() == null && cm.getTeamCt().getName() != null) || (nm.getTeamT().getName() == null && cm.getTeamT().getName() != null)) {
-							handle.teamNameChange(nm.getTeamCt().getName(), nm.getTeamT().getName());
+						if ((nm.getTeamT().getName() != null && (cm.getTeamT().getName() == null || !cm.getTeamT().getName().equals(cm.getTeamT().getName())))) {
+							handle.teamNameChange("t", nm.getTeamT().getName());
+						}
+						if ((nm.getTeamCt().getName() == null && cm.getTeamCt().getName() != null)) {
+							handle.teamNameChange("ct", nm.getTeamCt().getName());
+						}
+						if ((nm.getTeamT().getName() == null && cm.getTeamT().getName() != null)) {
+							handle.teamNameChange("t", nm.getTeamT().getName());
 						}
 					}
 				}
@@ -155,6 +164,7 @@ public class PostReceiver implements HttpHandler {
 			// PLAYER
 			if (jsr.getPlayer() != null) {
 				// This can't be right.. I'm just dumb
+				// Maybe it is right..
 				if ((serv.onlyUser && jsr.getPlayer().getSteamid().equals(jsr.getProvider().getSteamid())) || !serv.onlyUser) {
 					handle.receivedPlayer(jsr.getPlayer());
 					if (currentJSR.getPlayer() == null || !currentJSR.getPlayer().equals(jsr.getPlayer())) {

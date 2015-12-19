@@ -21,10 +21,10 @@ public class Map {
 	private Integer round;
 	@SerializedName("team_ct")
 	@Expose
-	private TeamCt teamCt;
+	private Team teamCt;
 	@SerializedName("team_t")
 	@Expose
-	private TeamT teamT;
+	private Team teamT;
 
 	/**
 	 * 
@@ -103,7 +103,7 @@ public class Map {
 	 * @return
 	 * 		The teamCt
 	 */
-	public TeamCt getTeamCt() {
+	public Team getTeamCt() {
 		return teamCt;
 	}
 
@@ -112,7 +112,7 @@ public class Map {
 	 * @param teamCt
 	 *            The team_ct
 	 */
-	public void setTeamCt(TeamCt teamCt) {
+	public void setTeamCt(Team teamCt) {
 		this.teamCt = teamCt;
 	}
 
@@ -121,7 +121,7 @@ public class Map {
 	 * @return
 	 * 		The teamT
 	 */
-	public TeamT getTeamT() {
+	public Team getTeamT() {
 		return teamT;
 	}
 
@@ -130,7 +130,7 @@ public class Map {
 	 * @param teamT
 	 *            The team_t
 	 */
-	public void setTeamT(TeamT teamT) {
+	public void setTeamT(Team teamT) {
 		this.teamT = teamT;
 	}
 }

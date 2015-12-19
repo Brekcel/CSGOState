@@ -3,7 +3,7 @@ package com.brekcel.csgostate.JSON;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public abstract class Team {
+public class Team {
 	@SerializedName("score")
 	@Expose
 	private Integer score;

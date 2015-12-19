@@ -13,7 +13,6 @@ import com.brekcel.csgostate.JSON.Weapon;
 // If using ALL methods of PostHandler, might as well just implement that
 // instead of extending this.
 public class PostHandlerAdapter implements PostHandler {
-
 	@Override
 	public void receivedJsonResponse(JsonResponse jsonResponse) {}
 
@@ -36,7 +35,7 @@ public class PostHandlerAdapter implements PostHandler {
 	public void roundChange(int round) {}
 
 	@Override
-	public void teamNameChange(String ct, String t) {}
+	public void teamNameChange(String team, String name) {}
 
 	@Override
 	public void scoreChange(int ct, int t) {}
@@ -46,6 +45,9 @@ public class PostHandlerAdapter implements PostHandler {
 
 	@Override
 	public void newRound(Round round) {}
+
+	@Override
+	public void receivedRound(Round round) {}
 
 	@Override
 	public void roundReset() {}
@@ -144,4 +146,8 @@ public class PostHandlerAdapter implements PostHandler {
 	public void playerMatchMVPSChange(int mvps) {}
 
 	@Override
-	public void playerMatchScoreChange(int score) {}}
+	public void playerMatchScoreChange(int score) {}
+
+	@Override
+	public void playerMatchStatsReceived(MatchStats ms) {}
+}
